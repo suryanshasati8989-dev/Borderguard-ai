@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0B0F17;
+  color: #dbe5f0;
+  background-image:
+    linear-gradient(rgba(16, 185, 129, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@layer components {
+  .glass-panel { @apply border border-slate-800/60 bg-slate-900/80 backdrop-blur-md shadow-panel; }
+  .hud-label { @apply text-[10px] tracking-[0.26em] text-emerald-300; }
+  .tactical-input { @apply w-full bg-slate-950/80 border border-slate-700 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-600 focus:border-emerald-400; }
+  .field-label { @apply text-xs uppercase tracking-wider text-slate-500; }
+  .tactical-button { @apply inline-flex items-center gap-2 bg-emerald-500 px-3 py-2 text-xs font-semibold tracking-wider text-slate-950 transition hover:bg-emerald-400 disabled:opacity-50; }
+  .icon-button { @apply inline-grid h-8 w-8 place-items-center border border-slate-700 bg-slate-900/80 text-slate-300 transition hover:border-emerald-400 hover:text-emerald-300; }
+  .source-card { @apply flex items-center gap-3 border border-slate-800 bg-slate-900/70 p-4 transition hover:border-emerald-400/60 hover:bg-emerald-400/[.04]; }
+  .source-card p { @apply mt-1 text-xs text-slate-500; }
+  .hud-reticle { position: relative; background-image: linear-gradient(#10b98188,#10b98188), linear-gradient(#10b98188,#10b98188), linear-gradient(#10b98188,#10b98188), linear-gradient(#10b98188,#10b98188); background-size: 26px 1px, 1px 26px, 26px 1px, 1px 26px; background-position: top left, top left, bottom right, bottom right; background-repeat: no-repeat; }
+}
+
+.scanlines::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 3px
+  );
+  opacity: 0.35;
+}
+
+.corner-frame {
+  position: relative;
+}
+.corner-frame::before,
+.corner-frame::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(168, 201, 74, 0.45);
+  border-style: solid;
+}
+.corner-frame::before {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+.corner-frame::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1px 1px 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a3a32;
+  border-radius: 8px;
+}
