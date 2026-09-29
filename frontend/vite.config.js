@@ -1,22 +1,28 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import fs from "fs";
-import path from "path";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import fs from 'fs'
+import path from 'path'
+
+// Check if local SSL certificates exist
+const certPath = path.resolve(__dirname, 'certs/cert.pem')
+const keyPath = path.resolve(__dirname, 'certs/key.pem')
+const hasCerts = fs.existsSync(certPath) && fs.existsSync(keyPath)
 
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173,
-    host: "0.0.0.0",   // expose to network (mobile access)
-    https: {
-      key:  fs.readFileSync(path.resolve("certs/key.pem")),
-      cert: fs.readFileSync(path.resolve("certs/cert.pem")),
-    },
+    // Only attach https certs locally if the files exist
+    https: hasCerts
+      ? {
+          key: fs.readFileSync(keyPath),
+          cert: fs.readFileSync(certPath),
+        }
+      : false,
     proxy: {
-      "/api": {
-        target: "http://127.0.0.1:5000",
+      '/api': {
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },
   },
-});
+})
